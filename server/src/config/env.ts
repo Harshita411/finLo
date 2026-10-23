@@ -7,6 +7,7 @@ const envSchema = z.object({
     .default("development"),
   PORT: z.coerce.number().default(5000),
   CLIENT_URL: z.string().default("http://localhost:5173"),
+  DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
 });
 
 const parsed = envSchema.safeParse(process.env);
@@ -16,5 +17,7 @@ if (!parsed.success) {
   console.error(parsed.error.flatten().fieldErrors);
   process.exit(1);
 }
+
+
 
 export const env = parsed.data;
